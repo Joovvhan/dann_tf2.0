@@ -1,7 +1,7 @@
 # DANN(Domain Adversarial Neural Network)
 Implementation of [DANN](https://arxiv.org/abs/1505.07818) in Tensorflow 2.0 environment, written for Deepest season 6 recruiting assignment.
 
-## Project Requirements
+## Assignment Requirements
 ### 1. Implementation of Gradient Reversal Layer(GRL)
 
 ``` python
@@ -60,10 +60,64 @@ self.classify_domain = Sequential([
     self.domain_classifier
 ])
 ```
-Implemented in [/src/models.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/models.py) as class variables of **DANN_Model** class.
-
+Implemented in [/src/models.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/models.py) as class variables of **DANN_Model** class using **tf.keras.Sequential**.
+**feature_extractor** is a set of stacked convolutional layers with a **Flatten layer** in the end.
+**label_predictor** predicts the label with stacked neural networks.
+**domain_classifier** predicts the domain where the inputs comes from, 0 for a source, 1 for a target. A **GradientReversalLayer** is located at the front.
+For all three architectures, both **MNIST** version and **SVHN** version from the original paper are implemented. The only difference from the original implementation is the existence of batch normalization layers.
+**predict_label** concatenates the **feature_extractor** and the **label_predictor**. This path predicts labels of input images.
+**classify_domain** concatenates the **feature_extractor** and the **domain_classifier**. This path predicts domains of inputs images.
 
 ### 3. Resizing and normalizing input data
+Simple normalization.
+``` python
+def load_data(data_category):
+    ...
+    x_train = x_train[:TRAIN_NUM] / 255.0
+    y_train = y_train[:TRAIN_NUM]
+
+    x_test = x_test[:TEST_NUM] / 255.0
+    y_test = y_test[:TEST_NUM]
+
+    return (x_train, y_train, x_test, y_test)
+```
+Implemented in [/src/preprocessing.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/preprocessing.py)
+Pixel values are devided by maximum value(255).
+
+Data resizing.
+``` python
+def data2dataset(x, y, data_category):
+    if (data_category == 'MNIST'):
+        dataset = tf.data.Dataset.from_tensor_slices((x, y))
+        dataset = dataset.map(pad_image)
+        dataset = dataset.map(duplicate_channel)
+        dataset = dataset.map(cast)
+        dataset = dataset.shuffle(len(y))
+
+    elif (data_category == 'SVHN' or data_category == 'SYN'):
+        dataset = tf.data.Dataset.from_tensor_slices((x, y))
+        dataset = dataset.map(cast)
+        dataset = dataset.shuffle(len(y))
+    return dataset
+    
+    def pad_image(x, y):
+	paddings = tf.constant([[2, 2,], [2, 2]])
+	new_x = tf.pad(x, paddings, "CONSTANT")
+	return (new_x, y)
+
+    def duplicate_channel(x, y):
+	new_x = tf.stack([x, x, x], axis = -1)
+	return (new_x, y)
+```
+Implemented in [/src/preprocessing.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/preprocessing.py)
+**data2dataset** prepares datasets by tf.data.Dataset.
+MNIST dataset has image size of (28, 28, 1), and both SVHN and SynNumbers have image size of (32, 32, 3). Input image size of (32, 32, 3 ) is considered as appropriate. **pad_image** function pads zeros around MNIST images, and **duplicate_channel** function stacks the same image by three times to create three channel images.
+
+``` python
+```
+
+
+
 
 ### 4. Prepare at least 2 datasets
 3 datasets are used to demonstrate implemented DANN network.
@@ -75,5 +129,8 @@ Implemented in [/src/models.py](https://github.com/Joovvhan/dann_tf2.0/blob/mast
 
 ### *. Comparison between source-only and DANN model
 
-## Reference
+## Remarks
+
+## References
+[DANN](https://arxiv.org/abs/1505.07818)
 [openTSNE](https://github.com/pavlin-policar/openTSNE)
