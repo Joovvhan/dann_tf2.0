@@ -140,7 +140,9 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 [SynNumbers](https://drive.google.com/file/d/0B9Z4d7lAwbnTSVR1dEFSRUFxOUU/view)
 
 ---
-### 5. Target classification accuracy above 70%
+### ~~5. Target classification accuracy above 70%~~
+
+Results are shown in the extra(*) section.
 
 ---
 ### *. Comparison between source-only and DANN model
@@ -154,11 +156,13 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 | Target Accuracy(SVHN)        | 20.2%        | -            | 84.8%      |
 | Target Accuracy(SynNumbers)  | 24.5%        | 91.1%        | -          |
 
+
 **MNIST Source-only Training Graph**
 
 | Accuracy | Loss |
 |:---:|:---:|
 | <img src="./img/mnist_label_prediction_accuracy.svg" width="360"> | <img src="./img/mnist_label_prediction_loss.svg" width="360"> |
+
 
 **SVHN Source-only Training Graph**
 
@@ -166,11 +170,13 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 |:---:|:---:|
 | <img src="./img/svhn_label_prediction_accuracy.svg" width="360"> | <img src="./img/svhn_label_prediction_loss.svg" width="360"> |
 
+
 **SynNumbers Source-only Training Graph**
 
 | Accuracy | Loss |
 |:---:|:---:|
 | <img src="./img/syn_label_prediction_accuracy.svg" width="360"> | <img src="./img/syn_label_prediction_loss.svg" width="360"> |
+
 
 ---
 
@@ -181,11 +187,14 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 | Source Test Accuracy         | 94.3%(-2.1%) |
 | Target Accuracy(SVHN)        | 72.2%(-12.6%) |
 
+
 **SynNumbers to SVHN Training Graph**
 
-| Accuracy | Loss |
-|:---:|:---:|
-| <img src="./img/syn2svhn_label_prediction_accuracy.svg" width="360"> | <img src="./img/syn2svhn_label_prediction_loss.svg" width="360"> |
+|| Accuracy | Loss |
+|:---:|:---:|:---:|
+|Label Prediction| <img src="./img/syn2svhn_label_prediction_accuracy.svg" width="360"> | <img src="./img/syn2svhn_label_prediction_loss.svg" width="360"> |
+|Domain Classification| <img src="./img/syn2svhn_domain_classification_accuracy.svg" width="360"> | <img src="./img/syn2svhn_domain_classification_loss.svg" width="360"> |
+
 
 ---
 
@@ -204,16 +213,14 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 |Label Prediction| <img src="./img/svhn2mnist_label_prediction_accuracy.svg" width="360"> | <img src="./img/svhn2mnist_label_prediction_loss.svg" width="360"> |
 |Domain Classification| <img src="./img/svhn2mnist_domain_classification_accuracy.svg" width="360"> | <img src="./img/svhn2mnist_domain_classification_loss.svg" width="360"> |
 
+
 ---
 
 ## Remarks
 
 In this implementation, DANN showed poor performance in terms of classification accuracy compared to source only training.
-
-I found three factors that affect the accuracy of the target label prediction.
-1. Accurracy of the source domain
-2. Similarity between the source domain and the target domain
-3. 
+First, I suspected that **GradientReversalLayer** was not working as I intended.
+To examined the effect of the GRL, I performed PCA transformation of latent features (output of the feature extractor) from both source and target images.
 
 **PCA Transformation Result During Source-only Training Process**
 
@@ -222,12 +229,41 @@ I found three factors that affect the accuracy of the target label prediction.
 |PCA| <img src="./img/mnist_pca/mnist_pca.gif" width="240"> | <img src="./img/svhn_pca/svhn_pca.gif" width="240"> | <img src="./img/syn_pca/syn_pca.gif" width="240"> |
 |TSNE| <img src="./img/mnist_pca/tsne.png" width="240"> | <img src="./img/svhn_pca/tsne_1.png" width="240"> | <img src="./img/syn_pca/tsne_1.png" width="240"> |
 
+
 **PCA Transformation Result During Source to Target Training Process**
 
 || SYN2SVHN | SVHN2MNIST |
 |:---:|:---:|:---:|
 |PCA| <img src="./img/syn2svhn_pca/syn2svhn.gif" width="240"> | <img src="./img/svhn2mnist_pca/svhn2mnist.gif" width="240"> | 
 |TSNE| <img src="./img/syn2svhn_pca/tsne_1.png" width="240"> | <img src="./img/svhn2mnist_pca/tsne_1.png" width="240"> | 
+
+It is shown that SVHN and SynNumbers are not much distinguishable for both source-only and DANN cases.
+
+On the other hand, features from MNIST are shown to be distinguishable for all source-only cases.
+
+For SVHN to MNIST case, it seems that there are some confusion effects that mix features from two datasets together, yet SVHN and MNIST seems to be still distinguishable for most of the training time.
+
+I assumed that there are few factors that resulted in poor perfomance of the DANN.
+
+#### 1. Label prediction accuracy of the source data 
+
+Compared to almost 100% prediction accuaracy for source training data in source-only training, DANN training showed lower accuracy in source datasets in both training and testing. It seems that gradient updates caused by feature extractor crippled the ability of the label predictor. I assumed that lowering the learning of the feature extractor would result in better performance.
+
+#### 2. Accuracy of the domain classifier
+
+The main idea of the GRL is based on the fact that negative gradient would leads to the opposite direction of the local minimum. However, for negative gradient to be in that desirable direction, original gradient should first be in the direction headed for local minimum. In other words, domain classifier should first know where the local minimum is. In this experiment, domain classifier showed prediction accuracy below 80% which means that original gradient update does not ensure the improvement closer to local minimum. In this case, gradient reversal layer would result in radomized gradient updates rather than getting away from the local minimum. I assumed that it is desirable to reach to almost 100% in domain classification in first few epochs to validate negative gradient updates. 
+
+#### 3. Similarity bewteen target and source datasets
+
+To our common sense, SVHN and SynNumbers seem much similiar compared to MNIST and I believe that when similarity between the source and the target decreases, learning rate of feature extractor should be increased to confuse the model from distinguishing two datasets. 
+
+
+Yet, I maintained same learning rate for every experiments and I believe changing learning rates and decays would result in better performance.
+
+I am afraid such modification process is beyond my understanding that I finish my experiment with current progress.
+
+---
+
 ## References
 
 [Domain-Adversarial Training of Neural Networks](https://arxiv.org/abs/1505.07818)
