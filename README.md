@@ -131,7 +131,9 @@ MNIST dataset has image size of (28, 28, 1), and both SVHN and SynNumbers have i
 
 ---
 ### 4. Prepare at least 2 datasets
-As shown in section 3, 3 datasets are used to demonstrate implemented DANN network.
+As shown in section 3, 3 datasets are used to demonstrate implemented DANN.
+
+60000 train data and 9000 test data from each datasets are used.
 
 [MNIST](http://yann.lecun.com/exdb/mnist/)
 
