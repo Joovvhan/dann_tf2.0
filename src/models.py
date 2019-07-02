@@ -98,7 +98,7 @@ class DANN_Model():
 			])
 		
 			self.domain_classifier = Sequential([
-				# GradientReversalLayer(),
+				GradientReversalLayer(),
 				Dense(1024, kernel_regularizer=l2(0.001)),
 				BatchNormalization(),
 				Activation('relu'),
@@ -108,7 +108,7 @@ class DANN_Model():
 				Activation('relu'),
 				Dropout(0.5),
 				Dense(2, kernel_regularizer=l2(0.001)),
-				Activation('sigmoid')          
+				Activation('softmax')          
 			])			
 
 		self.predict_label = Sequential([
@@ -131,9 +131,9 @@ class DANN_Model():
 		# self.dc_optimizer = tf.keras.optimizers.Adam(learning_rate=lr[1])
 		# self.fe_optimizer = tf.keras.optimizers.Adam(learning_rate=lr[2]) #fe_lr=0.0005
 
-		self.lp_optimizer = tf.keras.optimizers.Adam(learning_rate=self.lp_lr, decay=0.0000)
-		self.dc_optimizer = tf.keras.optimizers.Adam(learning_rate=self.dc_lr, decay=0.0000)
-		self.fe_optimizer = tf.keras.optimizers.Adam(learning_rate=self.fe_lr, decay=0.0000) #fe_lr=0.0005
+		self.lp_optimizer = tf.keras.optimizers.Adam(learning_rate=self.lp_lr, decay=0.00005)
+		self.dc_optimizer = tf.keras.optimizers.Adam(learning_rate=self.dc_lr, decay=0.0002)
+		self.fe_optimizer = tf.keras.optimizers.Adam(learning_rate=self.fe_lr, decay=0.0002) #fe_lr=0.0005
 
 		self.train_lp_loss = tf.keras.metrics.Mean()
 		self.train_dc_loss = tf.keras.metrics.Mean()
