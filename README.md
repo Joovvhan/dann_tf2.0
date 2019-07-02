@@ -20,7 +20,11 @@ class GradientReversalLayer(tf.keras.layers.Layer):
 ```
 Implemented in [/src/models.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/models.py)
 
-[@tf.custom_gradient](https://www.tensorflow.org/api_docs/python/tf/custom_gradient) decorator defines a tf operator with custom gradient. **GradientReversalOperator** serves as an identity operator in forward pass and a gradient reversal operator in backward pass. **GradientReversalLayer** is a child of keras layer class that wraps the custom operator.
+[@tf.custom_gradient](https://www.tensorflow.org/api_docs/python/tf/custom_gradient) decorator defines a tf operator with custom gradient.
+
+**GradientReversalOperator** serves as an identity operator in forward pass and a gradient reversal operator in backward pass.
+
+**GradientReversalLayer** is a child of keras layer class that wraps the custom operator.
 
 ### 2. Implementation of feature extractor, class classifier, domain classifier
 ``` python
@@ -61,15 +65,21 @@ self.classify_domain = Sequential([
 ])
 ```
 Implemented in [/src/models.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/models.py) as class variables of **DANN_Model** class using **tf.keras.Sequential**.
+
 **feature_extractor** is a set of stacked convolutional layers with a **Flatten layer** in the end.
+
 **label_predictor** predicts the label with stacked neural networks.
+
 **domain_classifier** predicts the domain where the inputs comes from, 0 for a source, 1 for a target. A **GradientReversalLayer** is located at the front.
+
 For all three architectures, both **MNIST** version and **SVHN** version from the original paper are implemented. The only difference from the original implementation is the existence of batch normalization layers.
+
 **predict_label** concatenates the **feature_extractor** and the **label_predictor**. This path predicts labels of input images.
+
 **classify_domain** concatenates the **feature_extractor** and the **domain_classifier**. This path predicts domains of inputs images.
 
 ### 3. Resizing and normalizing input data
-Simple normalization.
+#### Input Normalization
 ``` python
 def load_data(data_category):
     ...
@@ -84,7 +94,7 @@ def load_data(data_category):
 Implemented in [/src/preprocessing.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/preprocessing.py)
 Pixel values are devided by maximum value(255).
 
-Data resizing.
+#### Data Resize
 ``` python
 def data2dataset(x, y, data_category):
     if (data_category == 'MNIST'):
@@ -110,24 +120,27 @@ def data2dataset(x, y, data_category):
 	return (new_x, y)
 ```
 Implemented in [/src/preprocessing.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/preprocessing.py)
+
 **data2dataset** prepares datasets by tf.data.Dataset.
-MNIST dataset has image size of (28, 28, 1), and both SVHN and SynNumbers have image size of (32, 32, 3). Input image size of (32, 32, 3 ) is considered as appropriate. **pad_image** function pads zeros around MNIST images, and **duplicate_channel** function stacks the same image by three times to create three channel images.
 
-``` python
-```
+MNIST dataset has image size of (28, 28, 1), and both SVHN and SynNumbers have image size of (32, 32, 3). Input image size of (32, 32, 3 ) is considered as appropriate.
 
-
-
+**pad_image** function pads zeros around MNIST images, and **duplicate_channel** function stacks the same image by three times to create three channel image.
 
 ### 4. Prepare at least 2 datasets
-3 datasets are used to demonstrate implemented DANN network.
+As shown in section 3, 3 datasets are used to demonstrate implemented DANN network.
+
 [MNIST](http://yann.lecun.com/exdb/mnist/)
+
 [SVHN](http://ufldl.stanford.edu/housenumbers/)
+
 [SynNumbers](https://drive.google.com/file/d/0B9Z4d7lAwbnTSVR1dEFSRUFxOUU/view)
 
 ### 5. Target classification accuracy above 70%
 
 ### *. Comparison between source-only and DANN model
+
+
 
 ## Remarks
 
