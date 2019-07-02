@@ -155,10 +155,14 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 | Target Accuracy(SynNumbers)  | 24.5%        | 91.1%        | -          |
 
 **MNIST Source-only Training Graph**
+| Accuracy | Loss |
+|:---:|:---:|
+| <img src="./img/mnist_label_prediction_accuracy.svg" width="360"> | <img src="./img/mnist_label_prediction_loss.svg" width="360"> |
 
 **SVHN Source-only Training Graph**
 
 **SynNumbers Source-only Training Graph**
+
 
 #### SynNumbers to SVHN
 |                              | SynNumbers   |
@@ -166,7 +170,6 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 | Source Training Accuracy     | 97.4%(-2.4%) |
 | Source Test Accuracy         | 94.3%(-2.1%) |
 | Target Accuracy(SVHN)        | 72.2%(12.6%) |
-
 
 
 #### SVHN to MNIST
