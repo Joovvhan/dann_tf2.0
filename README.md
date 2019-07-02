@@ -155,22 +155,39 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 | Target Accuracy(SynNumbers)  | 24.5%        | 91.1%        | -          |
 
 **MNIST Source-only Training Graph**
+
 | Accuracy | Loss |
 |:---:|:---:|
 | <img src="./img/mnist_label_prediction_accuracy.svg" width="360"> | <img src="./img/mnist_label_prediction_loss.svg" width="360"> |
 
 **SVHN Source-only Training Graph**
 
+| Accuracy | Loss |
+|:---:|:---:|
+| <img src="./img/svhn_label_prediction_accuracy.svg" width="360"> | <img src="./img/svhn_label_prediction_loss.svg" width="360"> |
+
 **SynNumbers Source-only Training Graph**
 
+| Accuracy | Loss |
+|:---:|:---:|
+| <img src="./img/syn_label_prediction_accuracy.svg" width="360"> | <img src="./img/syn_label_prediction_loss.svg" width="360"> |
+
+---
 
 #### SynNumbers to SVHN
 |                              | SynNumbers   |
 | :--------------------------: |:------------:|
 | Source Training Accuracy     | 97.4%(-2.4%) |
 | Source Test Accuracy         | 94.3%(-2.1%) |
-| Target Accuracy(SVHN)        | 72.2%(12.6%) |
+| Target Accuracy(SVHN)        | 72.2%(-12.6%) |
 
+**SynNumbers to SVHN Training Graph**
+
+| Accuracy | Loss |
+|:---:|:---:|
+| <img src="./img/syn2svhn_label_prediction_accuracy.svg" width="360"> | <img src="./img/syn2svhn_label_prediction_loss.svg" width="360"> |
+
+---
 
 #### SVHN to MNIST
 |                              | SVHN          |
@@ -179,6 +196,14 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 | Source Test Accuracy         | 90.6%(-0.9%)  |
 | Target Accuracy(MNIST)       | 61.0%(-10.3%) |
 
+
+**SVHN to MNIST Training Graph**
+
+| Accuracy | Loss |
+|:---:|:---:|
+| <img src="./img/svhn2mnist_label_prediction_accuracy.svg" width="360"> | <img src="./img/svhn2mnist_label_prediction_loss.svg" width="360"> |
+
+---
 
 ## Remarks
 
