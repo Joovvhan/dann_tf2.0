@@ -123,7 +123,7 @@ def data2dataset(x, y, data_category):
 ```
 Implemented in [/src/preprocessing.py](https://github.com/Joovvhan/dann_tf2.0/blob/master/src/preprocessing.py)
 
-**data2dataset** prepares datasets by tf.data.Dataset.
+**data2dataset** prepares datasets as tf.data.Dataset.
 
 MNIST dataset has image size of (28, 28, 1), and both SVHN and SynNumbers have image size of (32, 32, 3). Input image size of (32, 32, 3 ) is considered as appropriate.
 
@@ -145,6 +145,36 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 ---
 ### *. Comparison between source-only and DANN model
 
+#### Source-only training results
+|                              |  MNIST       | SVHN         | SynNumbers |
+| :--------------------------: | :----------: | :----------: |:----------:|
+| Source Training Accuracy     | 99.9%        | 99.7%        | 99.8%      |
+| Source Test Accuracy         | 99.9%        | 91.5%        | 96.4%      |
+| Target Accuracy(MNIST)       | -            | 71.3%        | 89.2%      |
+| Target Accuracy(SVHN)        | 20.2%        | -            | 84.8%      |
+| Target Accuracy(SynNumbers)  | 24.5%        | 91.1%        | -          |
+
+**MNIST Source-only Training Graph**
+
+**SVHN Source-only Training Graph**
+
+**SynNumbers Source-only Training Graph**
+
+#### SynNumbers to SVHN
+|                              | SynNumbers   |
+| :--------------------------: |:------------:|
+| Source Training Accuracy     | 97.4%(-2.4%) |
+| Source Test Accuracy         | 94.3%(-2.1%) |
+| Target Accuracy(SVHN)        | 72.2%(12.6%) |
+
+
+
+#### SVHN to MNIST
+|                              | SVHN          |
+| :--------------------------: |:-------------:|
+| Source Training Accuracy     | 94.3%(-5.4%)  |
+| Source Test Accuracy         | 90.6%(-0.9%)  |
+| Target Accuracy(MNIST)       | 61.0%(-10.3%) |
 
 
 ## Remarks
