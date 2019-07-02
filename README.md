@@ -207,6 +207,13 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 
 ## Remarks
 
+**PCA Transformation Result During Source-only Training Process**
+
+|| MNIST | SVHN | SynNumbers |
+|:---:|:---:|:---:|:---:|
+|PCA| <img src="./img/mnist_pca/mnist_pca.gif" width="240"> | <img src="./img/svhn_pca/svhn_pca.gif" width="240"> | <img src="./img/syn_pca/syn_pca.gif" width="240"> |
+|TSNE| <img src="./img/mnist_pca/tsne.png" width="240"> | <img src="./img/svhn_pca/tsne_1.png" width="240"> | <img src="./img/syn_pca/tsne_1.png" width="240"> |
+
 ## References
 
 [Domain-Adversarial Training of Neural Networks](https://arxiv.org/abs/1505.07818)
