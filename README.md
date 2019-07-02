@@ -245,7 +245,7 @@ On the other hand, features from MNIST are shown to be distinguishable for all s
 
 For SVHN to MNIST case, it seems that there are some confusion effects that mix features from two datasets together, yet SVHN and MNIST seems to be still distinguishable for most of the training time.
 
-I assumed that there are few factors that resulted in poor perfomance of the DANN.
+I assumed that GRL is working as I intend and that some other factors are affecting the poor perfomance of the DANN.
 
 #### 1. Label prediction accuracy of the source data 
 
