@@ -207,6 +207,13 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 
 ## Remarks
 
+In this implementation, DANN showed poor performance in terms of classification accuracy compared to source only training.
+
+I found three factors that affect the accuracy of the target label prediction.
+1. Accurracy of the source domain
+2. Similarity between the source domain and the target domain
+3. 
+
 **PCA Transformation Result During Source-only Training Process**
 
 || MNIST | SVHN | SynNumbers |
