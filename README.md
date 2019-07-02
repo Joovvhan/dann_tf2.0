@@ -26,6 +26,7 @@ Implemented in [/src/models.py](https://github.com/Joovvhan/dann_tf2.0/blob/mast
 
 **GradientReversalLayer** is a child of keras layer class that wraps the custom operator.
 
+---
 ### 2. Implementation of feature extractor, class classifier, domain classifier
 ``` python
 self.feature_extractor = Sequential([
@@ -78,6 +79,7 @@ For all three architectures, both **MNIST** version and **SVHN** version from th
 
 **classify_domain** concatenates the **feature_extractor** and the **domain_classifier**. This path predicts domains of inputs images.
 
+---
 ### 3. Resizing and normalizing input data
 #### Input Normalization
 ``` python
@@ -127,6 +129,7 @@ MNIST dataset has image size of (28, 28, 1), and both SVHN and SynNumbers have i
 
 **pad_image** function pads zeros around MNIST images, and **duplicate_channel** function stacks the same image by three times to create three channel image.
 
+---
 ### 4. Prepare at least 2 datasets
 As shown in section 3, 3 datasets are used to demonstrate implemented DANN network.
 
@@ -136,8 +139,10 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 
 [SynNumbers](https://drive.google.com/file/d/0B9Z4d7lAwbnTSVR1dEFSRUFxOUU/view)
 
+---
 ### 5. Target classification accuracy above 70%
 
+---
 ### *. Comparison between source-only and DANN model
 
 
@@ -145,5 +150,7 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 ## Remarks
 
 ## References
-[DANN](https://arxiv.org/abs/1505.07818)
+
+[Domain-Adversarial Training of Neural Networks](https://arxiv.org/abs/1505.07818)
+
 [openTSNE](https://github.com/pavlin-policar/openTSNE)
