@@ -199,9 +199,10 @@ As shown in section 3, 3 datasets are used to demonstrate implemented DANN netwo
 
 **SVHN to MNIST Training Graph**
 
-| Accuracy | Loss |
-|:---:|:---:|
-| <img src="./img/svhn2mnist_label_prediction_accuracy.svg" width="360"> | <img src="./img/svhn2mnist_label_prediction_loss.svg" width="360"> |
+|| Accuracy | Loss |
+|:---:|:---:|:---:|
+|Label Prediction| <img src="./img/svhn2mnist_label_prediction_accuracy.svg" width="360"> | <img src="./img/svhn2mnist_label_prediction_loss.svg" width="360"> |
+|Domain Classification| <img src="./img/svhn2mnist_domain_classification_accuracy.svg" width="360"> | <img src="./img/svhn2mnist_domain_classification_loss.svg" width="360"> |
 
 ---
 
@@ -221,6 +222,12 @@ I found three factors that affect the accuracy of the target label prediction.
 |PCA| <img src="./img/mnist_pca/mnist_pca.gif" width="240"> | <img src="./img/svhn_pca/svhn_pca.gif" width="240"> | <img src="./img/syn_pca/syn_pca.gif" width="240"> |
 |TSNE| <img src="./img/mnist_pca/tsne.png" width="240"> | <img src="./img/svhn_pca/tsne_1.png" width="240"> | <img src="./img/syn_pca/tsne_1.png" width="240"> |
 
+**PCA Transformation Result During Source to Target Training Process**
+
+|| SYN2SVHN | SVHN2MNIST |
+|:---:|:---:|:---:|
+|PCA| <img src="./img/syn2svhn_pca/syn2svhn.gif" width="240"> | <img src="./img/svhn2mnist_pca/svhn2mnist.gif" width="240"> | 
+|TSNE| <img src="./img/syn2svhn_pca/tsne_1.png" width="240"> | <img src="./img/svhn2mnist_pca/tsne_1.png" width="240"> | 
 ## References
 
 [Domain-Adversarial Training of Neural Networks](https://arxiv.org/abs/1505.07818)
