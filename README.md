@@ -75,9 +75,9 @@ Implemented in [/src/models.py](https://github.com/Joovvhan/dann_tf2.0/blob/mast
 
 For all three architectures, both **MNIST** version and **SVHN** version from the original paper are implemented. The only difference from the original implementation is the existence of batch normalization layers.
 
-**predict_label** concatenates the **feature_extractor** and the **label_predictor**. This path predicts labels of input images.
+**predict_label** concatenates the **feature_extractor** and the **label_predictor**. This path predicts the label of input images.
 
-**classify_domain** concatenates the **feature_extractor** and the **domain_classifier**. This path predicts domains of inputs images.
+**classify_domain** concatenates the **feature_extractor** and the **domain_classifier**. This path predicts the domain of inputs images.
 
 ---
 ### 3. Resizing and normalizing input data
