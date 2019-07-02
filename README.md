@@ -1,4 +1,4 @@
-# DANN(Domain Adversarial Neural Network)
+# DANN(Domain-Adversarial Neural Network)
 Implementation of [DANN](https://arxiv.org/abs/1505.07818) in Tensorflow 2.0 environment, written for Deepest season 6 recruiting assignment.
 
 ## Assignment Requirements
